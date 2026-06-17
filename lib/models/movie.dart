@@ -1,0 +1,35 @@
+import '../ui/utils/constants.dart';
+
+class Movie {
+  final int id;
+  final String title;
+  final String overview;
+  final String posterPath;
+  final String releaseDate;
+  final double voteAverage;
+
+  Movie({
+    required this.id,
+    required this.title,
+    required this.overview,
+    required this.posterPath,
+    required this.releaseDate,
+    required this.voteAverage,
+  });
+
+  factory Movie.fromJson(Map<String, dynamic> json) {
+    return Movie(
+      id: json['id'] ?? 0,
+      title: json['title'] ?? 'Sin título',
+      overview: json['overview'] ?? 'Sin descripción',
+      posterPath: json['poster_path'] ?? '',
+      releaseDate: json['release_date'] ?? '',
+      voteAverage: (json['vote_average'] as num?)?.toDouble() ?? 0.0,
+    );
+  }
+
+  String get posterUrl {
+    if (posterPath.isEmpty) return '';
+    return '${Constants.imageBaseUrl}$posterPath';
+  }
+}

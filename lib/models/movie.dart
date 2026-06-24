@@ -5,6 +5,7 @@ class Movie {
   final String title;
   final String overview;
   final String posterPath;
+  final String backdropPath;
   final String releaseDate;
   final double voteAverage;
 
@@ -13,6 +14,7 @@ class Movie {
     required this.title,
     required this.overview,
     required this.posterPath,
+    required this.backdropPath,
     required this.releaseDate,
     required this.voteAverage,
   });
@@ -20,10 +22,11 @@ class Movie {
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(
       id: json['id'] ?? 0,
-      title: json['title'] ?? 'Sin título',
-      overview: json['overview'] ?? 'Sin descripción',
+      title: json['title'] ?? json['name'] ?? 'Sin título',
+      overview: json['overview'] ?? 'Sin descripción disponible.',
       posterPath: json['poster_path'] ?? '',
-      releaseDate: json['release_date'] ?? '',
+      backdropPath: json['backdrop_path'] ?? '',
+      releaseDate: json['release_date'] ?? 'Sin fecha',
       voteAverage: (json['vote_average'] as num?)?.toDouble() ?? 0.0,
     );
   }
@@ -31,5 +34,10 @@ class Movie {
   String get posterUrl {
     if (posterPath.isEmpty) return '';
     return '${Constants.imageBaseUrl}$posterPath';
+  }
+
+  String get backdropUrl {
+    if (backdropPath.isEmpty) return '';
+    return '${Constants.imageBaseUrl}$backdropPath';
   }
 }
